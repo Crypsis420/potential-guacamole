@@ -3,3 +3,6 @@ plugins:
 - jekyll-remote-theme
 title: Potential-Guacamole's Main Page
 description: Best group
+
+url: "https://potential-guacamole.com"
+baseurl: ""
