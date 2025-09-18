@@ -7,354 +7,186 @@ title: Home
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Team Potential Guacamole Website</title>
+  <title>Team Website</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     :root {
       --bg: #0f1220;
-      --panel: #161a2e;
-      --panel-2: #1c2140;
-      --text: #e9ecf1;
-      --muted: #9aa3b2;
+      --surface: #171a2b;
+      --text: #eef1f7;
+      --muted: #a4abbc;
       --accent: #7aa2ff;
-      --card: #0f152a;
       --border: #2a3158;
-      --shadow: 0 10px 30px rgba(0,0,0,.35);
-      --radius: 14px;
+      --radius: 12px;
     }
     * { box-sizing: border-box; }
-    html, body { height: 100%; }
     body {
       margin: 0;
       font: 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       color: var(--text);
-      background: linear-gradient(180deg, #0b0e1a 0%, var(--bg) 100%);
+      background: var(--bg);
+      scroll-behavior: smooth; /* smooth anchor jumps */
     }
 
-    /* Layout */
-    .layout {
-      display: grid;
-      grid-template-columns: 260px 1fr;
-      min-height: 100vh;
+    /* Simple header with buttons */
+    header {
+      position: sticky; top: 0; z-index: 10;
+      background: rgba(15,18,32,0.85);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid var(--border);
     }
-    aside {
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      padding: 28px 20px;
-      background: linear-gradient(180deg, var(--panel) 0%, var(--panel-2) 100%);
-      border-right: 1px solid var(--border);
+    .bar {
+      max-width: 980px; margin: 0 auto; padding: 10px 16px;
+      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
     }
-    main {
-      padding: 28px;
-    }
-
-    /* Sidebar */
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 22px;
-      text-decoration: none;
-      color: var(--text);
-    }
-    .brand-logo {
-      width: 36px; height: 36px;
-      border-radius: 8px;
-      background: radial-gradient(circle at 30% 30%, var(--accent), #4f6bdc 70%);
-      box-shadow: var(--shadow);
-    }
-    .brand h1 {
-      font-size: 18px;
-      letter-spacing: .06em;
-      margin: 0;
-      text-transform: uppercase;
-    }
-    nav a {
-      display: block;
-      padding: 10px 12px;
-      margin: 6px 0;
-      color: var(--text);
-      text-decoration: none;
-      border: 1px solid transparent;
-      border-radius: 10px;
-      transition: 140ms ease;
-    }
-    nav a:hover, nav a:focus {
-      background: var(--card);
-      border-color: var(--border);
-      outline: none;
-    }
-    .sidebar-note {
-      margin-top: 18px;
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    /* Hero */
-    .hero {
-      position: relative;
-      margin-bottom: 24px;
-      padding: 64px 28px;
-      border-radius: var(--radius);
-      background:
-        radial-gradient(1200px 400px at 10% -10%, rgba(122,162,255,.15), transparent 60%),
-        linear-gradient(180deg, rgba(122,162,255,.08), rgba(0,0,0,0));
+    .brand { font-weight: 700; letter-spacing: .02em; }
+    .spacer { flex: 1; }
+    .btn {
       border: 1px solid var(--border);
-      box-shadow: var(--shadow);
-      overflow: hidden;
+      background: var(--surface);
+      color: var(--text);
+      padding: 8px 12px;
+      border-radius: var(--radius);
+      cursor: pointer;
     }
-    .hero h2 {
-      margin: 0 0 6px;
-      font-size: 42px;
-      letter-spacing: .02em;
-    }
-    .hero p {
-      margin: 0;
-      color: var(--muted);
-      max-width: 60ch;
-    }
+    .btn:hover { border-color: var(--accent); }
 
     /* Sections */
+    main { max-width: 980px; margin: 0 auto; padding: 24px 16px 60px; }
     section {
-      margin: 36px 0;
-      padding: 22px;
-      border-radius: var(--radius);
-      background: rgba(12,16,32,.55);
+      margin: 28px 0;
+      padding: 18px;
+      background: var(--surface);
       border: 1px solid var(--border);
-      box-shadow: var(--shadow);
+      border-radius: var(--radius);
     }
-    .section-title {
-      margin: 0 0 16px;
-      font-size: 22px;
-      letter-spacing: .02em;
+    h2 { margin: 0 0 10px; }
+    .hero {
+      margin-top: 16px;
+      padding: 40px 18px;
+      text-align: center;
+      background: linear-gradient(180deg, #1a2041 0%, var(--surface) 100%);
     }
-    .muted { color: var(--muted); }
-
-    /* Projects grid */
     .grid {
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 16px;
+      display: grid; gap: 12px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
     .card {
-      grid-column: span 6;
-      padding: 14px;
-      background: var(--panel);
+      padding: 12px;
       border: 1px solid var(--border);
-      border-radius: 12px;
-      transition: transform .12s ease, box-shadow .12s ease;
-    }
-    .card:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
-    .thumb {
-      width: 100%;
-      aspect-ratio: 16/9;
-      display: block;
       border-radius: 10px;
-      background: linear-gradient(135deg, #25305a, #11162a);
-      border: 1px solid var(--border);
-      margin-bottom: 10px;
+      background: #13172a;
     }
-    .card a.btn {
-      display: inline-block;
-      margin-top: 8px;
-      padding: 8px 12px;
-      background: var(--accent);
-      color: #0b0e1a;
+    .card .open {
+      display: inline-block; margin-top: 6px;
+      text-decoration: none; color: var(--accent);
       font-weight: 600;
-      text-decoration: none;
-      border-radius: 10px;
     }
+    @media (max-width: 640px) { .grid { grid-template-columns: 1fr; } }
 
-    /* Links list */
-    .link-list a {
-      display: block;
-      padding: 10px 12px;
-      border-radius: 10px;
-      text-decoration: none;
-      color: var(--text);
-      border: 1px solid var(--border);
-      background: var(--panel);
-      margin: 8px 0;
-    }
-
-    /* Team grid */
-    .team {
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 16px;
-    }
-    .person {
-      grid-column: span 4;
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 14px;
-      text-align: center;
-    }
-    .avatar {
-      width: 100%;
-      aspect-ratio: 3/4;
-      border-radius: 10px;
-      background: linear-gradient(135deg, #2a3362, #0f1429);
-      border: 1px solid var(--border);
-      margin-bottom: 10px;
-    }
-    .person h4 { margin: 8px 0 6px; }
-    .person p { margin: 0; color: var(--muted); font-size: 14px; }
-    .person a.btn {
-      display: block;
-      margin-top: 10px;
-      padding: 8px 12px;
-      background: transparent;
-      border: 1px solid var(--border);
-      color: var(--text);
-      border-radius: 10px;
-      text-decoration: none;
-    }
-    .person a.btn:hover { background: var(--card); }
-
-    /* Footer */
-    footer {
-      margin: 36px 0 12px;
-      color: var(--muted);
-      text-align: center;
-      font-size: 14px;
-    }
-
-    /* Responsive */
-    @media (max-width: 980px) {
-      .layout { grid-template-columns: 1fr; }
-      aside { position: relative; height: auto; border-right: none; border-bottom: 1px solid var(--border); border-top-left-radius: 0; border-top-right-radius: 0; }
-      .card { grid-column: span 12; }
-      .person { grid-column: span 6; }
-    }
-    @media (max-width: 640px) {
-      .person { grid-column: span 12; }
-    }
+    footer { text-align: center; color: var(--muted); padding: 24px 0; }
   </style>
 </head>
 <body>
-  <div class="layout">
-    <!-- Static Sidebar -->
-    <aside>
-      <a href="#home" class="brand">
-        <span class="brand-logo" aria-hidden="true"></span>
-        <h1>Team Name</h1>
-      </a>
-      <nav aria-label="Primary">
-        <a href="#about">About</a>
-        <a href="#projects">Projects</a>
-        <a href="#links">Links</a>
-        <a href="#team">Team</a>
-      </nav>
-      <p class="sidebar-note">Use these anchors to jump between sections.</p>
-    </aside>
+  <!-- Simple top bar with buttons that jump to sections -->
+  <header>
+    <div class="bar">
+      <div class="brand">Team Name</div>
+      <div class="spacer"></div>
+      <button class="btn" onclick="location.hash='#about'">About</button>
+      <button class="btn" onclick="location.hash='#projects'">Projects</button>
+      <button class="btn" onclick="location.hash='#links'">Links</button>
+      <button class="btn" onclick="location.hash='#team'">Team</button>
+    </div>
+  </header>
 
-    <!-- Main Content -->
-    <main>
-      <!-- Hero -->
-      <header id="home" class="hero" role="banner">
-        <h2>Project Title</h2>
-        <p>A short, high-level description of your architecture or initiative. Keep it one or two sentences.</p>
-      </header>
+  <main>
+    <!-- Hero -->
+    <section id="home" class="hero">
+      <h1>Project Title</h1>
+      <p>One or two sentences describing your project or architecture.</p>
+    </section>
 
-      <!-- About -->
-      <section id="about" aria-labelledby="about-title">
-        <h3 class="section-title" id="about-title">About</h3>
-        <p class="muted">
-          Briefly describe the purpose and scope. Mention the core goals, guiding principles, and why this matters.
-        </p>
-      </section>
+    <!-- About -->
+    <section id="about">
+      <h2>About</h2>
+      <p>
+        Briefly explain the purpose, scope, and goals. Mention core principles and what success looks like.
+      </p>
+    </section>
 
-      <!-- Projects -->
-      <section id="projects" aria-labelledby="projects-title">
-        <h3 class="section-title" id="projects-title">Projects</h3>
-        <div class="grid">
-          <!-- Project card -->
-          <article class="card">
-            <div class="thumb" aria-hidden="true"></div>
-            <h4>Project A</h4>
-            <p class="muted">One-sentence summary of what this artifact is (e.g., report, prototype, demo).</p>
-            <a class="btn" href="#" target="_blank" rel="noopener">Open</a>
-          </article>
+    <!-- Projects -->
+    <section id="projects">
+      <h2>Projects</h2>
+      <div class="grid">
+        <article class="card">
+          <h3>Artifact A</h3>
+          <p>Short description (e.g., report, slides, demo).</p>
+          <a class="open" href="#" target="_blank" rel="noopener">Open</a>
+        </article>
+        <article class="card">
+          <h3>Artifact B</h3>
+          <p>Short description.</p>
+          <a class="open" href="#" target="_blank" rel="noopener">Open</a>
+        </article>
+        <article class="card">
+          <h3>Artifact C</h3>
+          <p>Short description.</p>
+          <a class="open" href="#" target="_blank" rel="noopener">Open</a>
+        </article>
+        <article class="card">
+          <h3>Artifact D</h3>
+          <p>Short description.</p>
+          <a class="open" href="#" target="_blank" rel="noopener">Open</a>
+        </article>
+      </div>
+    </section>
 
-          <article class="card">
-            <div class="thumb" aria-hidden="true"></div>
-            <h4>Project B</h4>
-            <p class="muted">Another artifact with a short descriptor. Replace link and title.</p>
-            <a class="btn" href="#" target="_blank" rel="noopener">Open</a>
-          </article>
+    <!-- Links -->
+    <section id="links">
+      <h2>Links</h2>
+      <ul>
+        <li><a class="open" href="#" target="_blank" rel="noopener">Main Website</a></li>
+        <li><a class="open" href="#" target="_blank" rel="noopener">Source Code</a></li>
+        <li><a class="open" href="#" target="_blank" rel="noopener">Reference Paper</a></li>
+        <li><a class="open" href="#" target="_blank" rel="noopener">Architecture Notes</a></li>
+      </ul>
+    </section>
 
-          <article class="card">
-            <div class="thumb" aria-hidden="true"></div>
-            <h4>Project C</h4>
-            <p class="muted">Use consistent naming: Report, Slides, Demo, API, etc.</p>
-            <a class="btn" href="#" target="_blank" rel="noopener">Open</a>
-          </article>
-
-          <article class="card">
-            <div class="thumb" aria-hidden="true"></div>
-            <h4>Project D</h4>
-            <p class="muted">Add as many cards as you need; the grid is responsive.</p>
-            <a class="btn" href="#" target="_blank" rel="noopener">Open</a>
-          </article>
+    <!-- Team -->
+    <section id="team">
+      <h2>Team</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>Member One</h3>
+          <p>Role or focus area.</p>
+          <a class="open" href="#" target="_blank" rel="noopener">LinkedIn</a>
         </div>
-      </section>
-
-      <!-- Links -->
-      <section id="links" aria-labelledby="links-title">
-        <h3 class="section-title" id="links-title">Links</h3>
-        <div class="link-list">
-          <a href="#" target="_blank" rel="noopener"><strong>Main Website</strong> — description</a>
-          <a href="#" target="_blank" rel="noopener"><strong>Source Code</strong> — repository link</a>
-          <a href="#" target="_blank" rel="noopener"><strong>Paper / Doc</strong> — overview or reference</a>
-          <a href="#" target="_blank" rel="noopener"><strong>Architecture Notes</strong> — ADRs / diagrams</a>
+        <div class="card">
+          <h3>Member Two</h3>
+          <p>Role or focus area.</p>
+          <a class="open" href="#" target="_blank" rel="noopener">LinkedIn</a>
         </div>
-      </section>
-
-      <!-- Team -->
-      <section id="team" aria-labelledby="team-title">
-        <h3 class="section-title" id="team-title">Team</h3>
-        <div class="team">
-          <article class="person">
-            <div class="avatar" aria-hidden="true"></div>
-            <h4>Member One</h4>
-            <p>Role or program / focus area.</p>
-            <a class="btn" href="#" target="_blank" rel="noopener">LinkedIn</a>
-          </article>
-
-          <article class="person">
-            <div class="avatar" aria-hidden="true"></div>
-            <h4>Member Two</h4>
-            <p>Role or program / focus area.</p>
-            <a class="btn" href="#" target="_blank" rel="noopener">LinkedIn</a>
-          </article>
-
-          <article class="person">
-            <div class="avatar" aria-hidden="true"></div>
-            <h4>Member Three</h4>
-            <p>Role or program / focus area.</p>
-            <a class="btn" href="#" target="_blank" rel="noopener">LinkedIn</a>
-          </article>
-
-          <article class="person">
-            <div class="avatar" aria-hidden="true"></div>
-            <h4>Member Four</h4>
-            <p>Role or program / focus area.</p>
-            <a class="btn" href="#" target="_blank" rel="noopener">LinkedIn</a>
-          </article>
+        <div class="card">
+          <h3>Member Three</h3>
+          <p>Role or focus area.</p>
+          <a class="open" href="#" target="_blank" rel="noopener">LinkedIn</a>
         </div>
-      </section>
+        <div class="card">
+          <h3>Member Four</h3>
+          <p>Role or focus area.</p>
+          <a class="open" href="#" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+      </div>
+    </section>
+  </main>
 
-      <footer>
-        <p>© <span id="year"></span> Team Name • Built for a course or project</p>
-      </footer>
-    </main>
-  </div>
+  <footer>
+    © <span id="year"></span> Team Name
+  </footer>
 
   <script>
-    // tiny helper to keep the footer year current
+    // update footer year
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 </body>
