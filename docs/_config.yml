@@ -1,7 +1,7 @@
 #remote_theme: pages-themes/midnight@v0.2.0
 #remote_theme: pages-themes/slate@v0.2.0
-remote_theme: bulma-clean-theme
-plugins:
-- jekyll-remote-theme
-title: Potential-Guacamole's Main Page
-description: Best group
+# remote_theme: bulma-clean-theme
+# plugins:
+# - jekyll-remote-theme
+# title: Potential-Guacamole's Main Page
+# description: Best group
